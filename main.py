@@ -3,19 +3,19 @@ import random as rng
 import processing as proc
 import imutils
 
-#============== OPTIONS =================#
+# ============== OPTIONS =================#
 
-debug = True
-dump = False
+debug = True  # Set "True" to enable display of debug info/images
+dump = False  # Set "True" to enable dump of debug info/images
 
 base_image = 'baseimage.jpg'
 
-#========================================#
+# ========================================#
 
 rng.seed(12345)
 
-def main():
 
+def main():
     cap = cv.VideoCapture(1)
     ret, src = cap.read()
 
@@ -75,13 +75,15 @@ def main():
 
         _, binarized_diff = cv.threshold(diff, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
 
-        cv.imwrite('binarized_diff.jpg', binarized_diff)
-        cv.imwrite('diff.jpg', diff)
-        cv.imwrite('mask.jpg', mask)
-        cv.imwrite('filled_after.jpeg', filled_after)
+        if dump:
+            cv.imwrite('binarized_diff.jpg', binarized_diff)
+            cv.imwrite('diff.jpg', diff)
+            cv.imwrite('mask.jpg', mask)
+            cv.imwrite('filled_after.jpeg', filled_after)
 
     cv.waitKey(0)
     cap.release()
     cv.destroyAllWindows()
+
 
 main()

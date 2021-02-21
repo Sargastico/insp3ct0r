@@ -8,13 +8,16 @@ def imageOverlay(img1, img2):
     #create a ROI
     rows, cols, channels = img2.shape
     roi = img1[0:rows, 0:cols]
+
     # create a mask and create its inverse mask
     img2gray = cv.cvtColor(img2, cv.COLOR_BGR2GRAY)
     ret, mask = cv.threshold(img2gray, 10, 255, cv.THRESH_BINARY)
     mask_inv = cv.bitwise_not(mask)
+
     # black-out the area in ROI
     img1_bg = cv.bitwise_and(roi, roi, mask=mask_inv)
     img2_fg = cv.bitwise_and(img2, img2, mask=mask)
+
     # overlay
     dst = cv.add(img1_bg, img2_fg)
     img1[0:rows, 0:cols] = dst
