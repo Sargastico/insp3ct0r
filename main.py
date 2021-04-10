@@ -2,12 +2,13 @@
 import sys
 
 # import some PyQt5 modules
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import pyqtSlot
 
+from core.flow.flowproc import processFrame
 from ui import *
 
 import cv2
@@ -30,6 +31,20 @@ class MainWindow(QWidget):
         self.timer.timeout.connect(self.viewCam)
         # set control_bt callback clicked  function
         self.controlTimer()
+        self.initUI()
+
+    def initUI(self):
+
+        button = QPushButton('captureButton', self)
+        button.clicked.connect(self.captureButton)
+        self.show()
+
+    @pyqtSlot()
+    def captureButton(self):
+        ret, image = self.cap.read()
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        processFrame(image)
+
 
     # view camera
     def viewCam(self):

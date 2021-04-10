@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1162</width>
-    <height>602</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -91,6 +91,19 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="captureButton">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>490</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>capture</string>
     </property>
    </widget>
   </widget>

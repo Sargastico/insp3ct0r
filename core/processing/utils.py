@@ -59,7 +59,7 @@ def drawRoi(src, drawBoundingBoxes, crop):
     cropped = None
     if crop:
         cropped = src[y:y+h, x:x+w]
-        cv.imshow('cropped', cropped)
+        # cv.imshow('cropped', cropped)
 
 
     return drawing, thresh_im, cropped
