@@ -1,6 +1,10 @@
 # OPENCV DEFECT INSPECTION
 
 - Install python 3.x
+[Windows/Linux](https://www.python.org/downloads/)
+
+- Create the Python Virtual Environment
+[reference](https://docs.python.org/pt-br/3/library/venv.html).
 
 - Install "pip" following the official
 [documentation](https://pip.pypa.io/en/stable/installing/).
