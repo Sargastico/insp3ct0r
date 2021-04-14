@@ -4,6 +4,8 @@ import imutils
 
 from core import processing as proc
 
+# teste muriell!
+
 # ============== OPTIONS =================#
 from core.processing.homography import HomographyCorrection
 from core.processing.pca import pcaTransform
