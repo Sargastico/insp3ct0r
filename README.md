@@ -7,7 +7,7 @@
  /##c '\  (    |___|_|\_|___/_| |___/\___| |_| \__/|_|_\                                                                   
 ' |'  -{.  )                                                    
  /\__-' \[]     If you eliminate all other possibilities the one that remains, however unlikely, is the right answer.
-/`-_`\          Elementary my dear Watson.
+/`-_`\          - Elementary my dear Watson.
 '     \    
 ```
 
