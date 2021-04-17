@@ -2,7 +2,7 @@ from skimage.metrics import structural_similarity
 import cv2 as cv
 import numpy as np
 
-def differenceInspection(baseimg, tocompareimg, showResults):
+def differenceInspection(baseimg, tocompareimg, showResults=False):
 
     height, width, _ = baseimg.shape
 

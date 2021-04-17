@@ -24,7 +24,7 @@ def imageOverlay(img1, img2):
 
     return img1
 
-def drawRoi(src, drawBoundingBoxes, crop):
+def drawRoi(src, crop ,drawBoundingBoxes=False):
 
     src_gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
     src_gray = cv.blur(src_gray, (3, 3))
