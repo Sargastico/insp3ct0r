@@ -19,8 +19,7 @@ def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
     :param optDump: Set 'True' to enable any file dump for debugging
     '''
 
-    refFilename = "assets/baseImage.jpg"
-    imReference = cv.imread(refFilename, cv.IMREAD_COLOR)
+    imReference = cv.imread(refImage, cv.IMREAD_COLOR)
 
     imReg, h, imMatches = HomographyCorrection(srcFrame, imReference)
     draw, thresh_im, _ = drawRoi(srcFrame, True)
