@@ -1,8 +1,14 @@
+'''
+This test code don't work with open-cv headless, but open-cv headless is used
+for compatibility with PyQT GUI Library.
+
+To run this code, create another venv (python virual environment) and install open-cv fully.
+'''
+
 import cv2 as cv
 import random as rng
 import imutils
 import core
-
 # ============== OPTIONS =================#
 
 debug = True  # Set "True" to enable display of debug info/images
