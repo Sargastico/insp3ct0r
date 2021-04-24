@@ -29,12 +29,14 @@ class MainWindow(QWidget):
 
     def initUI(self):
 
-        button = QPushButton('captureButton', self)
-        button.clicked.connect(self.captureButton)
+        self.ui.CaptureButton.clicked.connect(self.CaptureEvent)
+        # button = QPushButton('CaptureButton', self)
+        # button.clicked.connect(self.CaptureEvent)
         self.show()
 
     @pyqtSlot()
-    def captureButton(self):
+    def CaptureEvent(self):
+
         ret, image = self.cap.read()
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         processFrame(image, 'assets/baseimage.jpg')
@@ -57,6 +59,7 @@ class MainWindow(QWidget):
 
     # start/stop timer
     def controlTimer(self):
+
         # if timer is stopped
         if not self.timer.isActive():
             # create video capture
