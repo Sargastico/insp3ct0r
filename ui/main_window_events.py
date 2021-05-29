@@ -37,10 +37,28 @@ class MainWindow(QWidget):
     @pyqtSlot()
     def CaptureEvent(self):
 
-        ret, image = self.cap.read()
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        processFrame(image, 'assets/baseimage.jpg')
-        self.ui.result_view_frame.setPixmap(QPixmap('./assets/result.jpg'))
+        error = True
+        retries = 10
+        count = 0
+
+        while error and (count < retries):
+
+            ret, image = self.cap.read()
+            error, score = processFrame(image, 'assets/baseimage.jpg', 0.50, optDump=True)
+
+            if type(error) == bool:
+
+                count = count + 1
+                print("Iteration #" + str(count) + " | Image similarity: " + str(score))
+
+        if not error:
+
+            self.ui.result_view_frame.setPixmap(QPixmap('./assets/result.jpg'))
+            print("[+] Result: GOOD")
+
+        else:
+
+            print("[-] Result: BAD")
 
     # view camera
     def viewCam(self):

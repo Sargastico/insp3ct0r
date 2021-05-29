@@ -14,7 +14,7 @@ def differenceInspection(baseimg, tocompareimg, showResults=False):
 
     # Compute SSIM between two images
     (score, diff) = structural_similarity(before_gray, after_gray, full=True)
-    print("Image similarity", score)
+
 
     # The diff image contains the actual image differences between the two images
     # and is represented as a floating point data type in the range [0,1]
@@ -46,4 +46,4 @@ def differenceInspection(baseimg, tocompareimg, showResults=False):
         cv.imshow('mask', mask)
         cv.imshow('filled after', filled_after)
 
-    return diff, mask, filled_after
+    return score, diff, mask, filled_after

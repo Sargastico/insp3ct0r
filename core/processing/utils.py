@@ -5,7 +5,7 @@ import random as rng
 
 def imageOverlay(img1, img2):
 
-    #create a ROI
+    # create a ROI
     rows, cols, channels = img2.shape
     roi = img1[0:rows, 0:cols]
 

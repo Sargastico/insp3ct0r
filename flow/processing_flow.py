@@ -1,3 +1,5 @@
+import math
+
 import cv2 as cv
 import random as rng
 import imutils
@@ -11,7 +13,8 @@ from core.processing.utils import drawRoi
 
 rng.seed(12345)
 
-def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
+
+def processFrame(srcFrame, refImage, similarity_threshold, optDebug=False, optDump=False):
     '''
     :param srcFrame: Image Frame to process
     :param refImage: Reference Image for Homography and Subtraction
@@ -19,25 +22,19 @@ def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
     :param optDump: Set 'True' to enable any file dump for debugging
     '''
 
-    imReference = cv.imread(refImage, cv.IMREAD_COLOR)
-
+    imReference = cv.imread(refImage)
     imReg, h, imMatches = HomographyCorrection(srcFrame, imReference)
     draw, thresh_im, _ = drawRoi(srcFrame, True)
     imagePca, angleDegree = pcaTransform(srcFrame)
     rotationImage = imutils.rotate(srcFrame, angle=angleDegree)
+
+    cv.imwrite('assets/srcframe.jpg', srcFrame)
     cv.imwrite('assets/fixedorientation.jpg', rotationImage)
 
     if optDebug:
         print("Estimated homography : \n", h)
 
     dst = proc.utils.imageOverlay(srcFrame, draw)
-
-    if optDebug:
-        cv.imshow("perspective", imReg)
-        cv.imshow("rotated", rotationImage)
-        cv.imshow('threshold', thresh_im)
-        cv.imshow("features", imMatches)
-        cv.imshow("bounding", dst)
 
     if optDump:
         cv.imwrite("assets/perspective.jpg", srcFrame)
@@ -52,7 +49,7 @@ def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
 
     cv.imwrite('assets/croppedimage.jpg', cropped_image)
 
-    baseimage = cv.imread(refImage)
+
     draw, thresh_im, cropped_image = proc.utils.drawRoi(imReference, True, True)
 
     cv.imwrite('assets/croppedbaseimage.jpg', cropped_image)
@@ -60,7 +57,15 @@ def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
     img1 = cv.imread('assets/croppedbaseimage.jpg')
     img2 = cv.imread('assets/croppedimage.jpg')
 
-    diff, mask, filled_after = proc.subtraction.differenceInspection(img1, img2)
+    print("Tamanho baseimage: " + str(img1.shape))
+    print("Tamanho image: " + str(img2.shape))
+
+    if not math.isclose(img1.shape[0], img2.shape[0], rel_tol=5) and math.isclose(img1.shape[1], img2.shape[1], rel_tol=5):
+        print("BAD SHAPE")
+        return -1, -1
+
+    score, diff, mask, filled_after = proc.subtraction.differenceInspection(img1, img2)
+    similarity = score
 
     _, binarized_diff = cv.threshold(diff, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
 
@@ -72,4 +77,8 @@ def processFrame(srcFrame, refImage, optDebug=False, optDump=False):
         cv.imwrite('assets/mask.jpg', mask)
         cv.imwrite('assets/filled_after.jpeg', filled_after)
 
-    return
+    if similarity >= similarity_threshold:
+
+        return False, similarity # Without errors
+
+    return True, similarity # Result Errors
